@@ -11,7 +11,6 @@ class RecipeCard extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
     // A2. TODO - Create an <article> element - This will hold our markup once our data is set
     let article = document.createElement("article");
-    article.setAttribute("class", "article");
     // A3. TODO - Create a style element - This will hold all of the styles for the Web Component
     let style = document.createElement("style");
     // A4. TODO - Insert all of the styles from cardTemplate.html into the <style> element you just made
@@ -121,45 +120,46 @@ class RecipeCard extends HTMLElement {
     // If nothing was passed in, return
     if (!data) return;
     // A6. TODO - Select the <article> we added to the Shadow DOM in the constructor
-    const article = document.querySelector('article');
-    
+    let article = this.shadowRoot.querySelector("article");
     // A7. TODO - Set the contents of the <article> with the <article> template given in
     //           cardTemplate.html and the data passed in (You should only have one <article>,
     //           do not nest an <article> inside another <article>). You should use Template
     //           literals (tempalte strings) and element.innerHTML for this.
-    /*article.innerHTML = `
-    <img src=data.imgSrc
-      alt=data.imgAlt>
+   /* <article>
+    <img src="https://link-to-article.com/recipe-thumbnail.jpg"
+      alt="Recipe Title">
     <p class="title">
-      <a href=data.titleLnk>data.titleTxt</a>
+      <a href="https://link-to-article.com">Title</a>
     </p>
-    <p class="organization">data.organization</p>
+    <p class="organization">The Chef's Organization</p>
     <div class="rating">
-      <span>data.rating</span>
-      <img src="/assets/images/icons/"+data.rating+"-star.svg" alt=data.rating>
-      <span>(data.numRatings)</span>
+      <span>5</span>
+      <img src="/assets/images/icons/5-star.svg" alt="5 stars">
+      <span>(500)</span>
     </div>
-    <time>data.lengthTime</time>
+    <time>50 min</time>
     <p class="ingredients">
-      data.ingredients
-    </p>`;*/
-    let imgLinks = "<img src=" + data.imgSrc + " alt=" + data.imgAlt + ">";
-    let titles = "<p class=title>  <a href=" + data.titleLnk + ">" + data.title + "/a></p>";
-    let organization = "<p class=organization>" + data.organization + "</p>";
-    let rating = "<div class=rating>  <span>" + data.rating + "</span>  " + "<img src=/assets/images/icons/" + data.rating + 
-    "-star.svg\" alt=" + data.rating + "<span>" + data.numRatings + "</span></div>";
-    let time = "<time>" + data.time + "</time>";
-    let ingredientsList = "";
-    for(i=0; i<data.ingredients.length; ++i){
-      if(i = 0){
-        ingredientsList = ingredientsList + data.ingredients[i];
-      }
-      else{
-        ingredientsList = ingredientsList + ', ' + data.ingredients[i];
-      }
-    }
-    let ingredients = "<p class=\"ingredients\">  " + ingredientsList + "</p>";
-    article.innerHTML = imgLinks + titles + organization + rating + time + ingredients;
+      Comma, Separated, List, of, Ingredients
+    </p>
+    </article>*/
+    let img_src = data['imgSrc'];
+    let img_alt = data['imgAlt'];
+    let title_link = data['titleLnk'];
+    let title_text = data['titleTxt'];
+    let org = data['organization'];
+    let rate = data['rating'];
+    let num_ratings = data['numRatings'];
+    let time = data['lengthTime'];
+    let ingre = data['ingredients'];
+    let img_rate = "/assets/images/icons/"+rate+"-star.svg";
+
+    let img = "<img src=" + img_src + " alt=" + img_alt + ">";
+    let title = "<p class='title'> <a href=" + title_link + ">" + title_text + "</a></p>";
+    let organization = "<p class='organization'>" + org + "</p>";
+    let rating = "<div class=\'rating\'> <span>" + rate + "</span>" + "<img src=" + img_rate + " alt=" + rate + " stars><span>(" + num_ratings + ")</span></div>";
+    let t = "<time>" + time + "</time>";
+    let ing = "<p class='ingredients'>" + ingre + "</p>";
+    article.innerHTML = img + title + organization + rating + t + ing;
   }
 }
 
