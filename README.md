@@ -1,3 +1,3 @@
 # Lab 6 - Starter
-Chin-Lin Wang
+Chin-Lin Wang\
 Vaughan Chase
