@@ -24,7 +24,12 @@ function getRecipesFromStorage() {
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
   //           be no more than a few lines.
-  return localStorage['recipes'];
+  if(localStorage['recipes']){
+    return localStorage['recipes'];
+  }
+  else{
+    return "[]";
+  }
 }
 
 /**
@@ -59,9 +64,7 @@ function saveRecipesToStorage(recipes) {
   // B1. TODO - Complete the functionality as described in this function
   //            header. It is possible in only a single line, but should
   //            be no more than a few lines.
-  for(let recipe in recipes){
-    localStorage.setItem('recipes', recipe.toString());
-  }  
+  return localStorage.setItem('recipes', JSON.stringify(recipes));
 }
 
 /**
@@ -97,13 +100,24 @@ function initFormHandler() {
   // B9. TODO - Get the recipes array from localStorage, add this new recipe to it, and
   //            then save the recipes array back to localStorage
     let res = getRecipesFromStorage();
-    res.push(recipeObject);
-    saveRecipesToStorage(res);
+    let recipeArr = JSON.parse(res);
+    recipeArr.push(recipeObject);
+    saveRecipesToStorage(recipeArr);
   });
   // B10. TODO - Get a reference to the "Clear Local Storage" button
+  let clear = document.querySelector(".danger")
   // B11. TODO - Add a click event listener to clear local storage button
-  // Steps B12 & B13 will occur inside the event listener from step B11
-  // B12. TODO - Clear the local storage
-  // B13. TODO - Delete the contents of <main>
+  clear.addEventListener("click", function(event){
+    // Steps B12 & B13 will occur inside the event listener from step B11
+    // B12. TODO - Clear the local storage
+    localStorage.clear();
+    // B13. TODO - Delete the contents of <main>
+    var e = document.querySelector("main");
+    var child = e.lastElementChild; 
+    while (child) {
+        e.removeChild(child);
+        child = e.lastElementChild;
+    }
+  });
 
 }
